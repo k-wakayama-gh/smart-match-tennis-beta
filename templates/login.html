@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Login page">
+        <meta name="author" content="nameless">
+        <link rel="icon" href="/static/img/favicon.ico">
+        <link rel="stylesheet" href="/static/css/base.css">
+        <link rel="stylesheet" href="/static/css/login.css">
+        <title>Login</title>
+    </head>
+    <body class="flex-column">
+        {% include "header.html" %}
+
+        <main class="flex-column">
+            <div class="flex-column-center padding-1">
+                <h2 class="text-center">ログイン</h2>
+                <form id="login-form" class="flex-column">
+                    <input type="text" inputmode="email" name="username" placeholder="ユーザー名 / メールアドレス" required>
+                    <div class="space"></div>
+                    <input type="password" name="password" placeholder="パスワード" required>
+                    <div class="space"></div>
+                    <button type="submit" id="login-btn">ログイン</button>
+                </form>
+                <p id="login-failed-message" class="hidden">ログインに失敗しました</p>
+            </div>
+        </main>
+
+        <footer id="footer">
+            <p>&copy; nameless</p>
+        </footer>
+        <script src="/static/js/base.js"></script>
+    </body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Smart Match Tennis">
+        <meta name="author" content="nameless">
+        <link rel="icon" href="/static/img/favicon.ico">
+        <link rel="stylesheet" href="/static/css/base.css">
+        <link rel="stylesheet" href="/static/css/matchbot_local.css">
+        <title>Smart Match Tennis</title>
+    </head>
+    <body>
+        {% include "header.html" %}
+        <main>
+            <div id="savedata-div">
+                <h2>保存済みの大会データ</h2>
+                <ul id="savedata-list"></ul>
+            </div>
+
+            <div class="interval hidden">▽ 新規作成 ▽</div>
+
+            <!-- 大会設定画面 -->
+            <div id="tournament-setup" class="container-group">
+                <div id="tournament-info-div">
+                    <h2 class="heading">大会情報</h2>
+                    <input id="tournament-name" type="text" placeholder="大会名">
+                    <textarea id="tournament-description" placeholder="説明"></textarea>
+                </div>
+
+                <div id="court-div">
+                    <div class="flex-row-between heading-container">
+                        <h3 class="heading-in">コート　(<span id="court-count">1</span>)</h3>
+                        <div>
+                            <button class="tournament-setup-btn" onclick="addCourt()">＋</button>
+                            <button class="tournament-setup-btn" onclick="removeCourt()">－</button>
+                        </div>
+                    </div>
+                    <div id="court-list"></div>
+                </div>
+                
+                <div id="block-div">
+                    <div class="flex-row-between heading-container">
+                        <h3 class="heading-in">ブロック　(<span id="block-count">1</span>)</h3>
+                        <div>
+                            <button class="tournament-setup-btn" onclick="addBlock()">＋</button>
+                            <button class="tournament-setup-btn" onclick="removeBlock()">－</button>
+                        </div>
+                    </div>
+                    <div id="blocks"></div>
+                </div>
+
+                <div>
+                    <button id="generate-tournament-btn" class="tournament-setup-btn" onclick="generateTournamentFromDOM();">試合生成</button>
+                    <!-- <button onclick="goToMatchManagement();">試合管理</button> -->
+                </div>
+            </div>
+
+            <!-- 試合管理画面 -->
+            <div id="match-management" class="container-group hidden">
+                <div id="tournament-title-div"></div>
+
+                <div>
+                    <h2 class="heading">現在進行中の試合</h2>
+                    <div id="current-matches-list"></div>
+                </div>
+
+                <div>
+                    <h2 class="heading">試合進行表</h2>
+                    <div id="match-sequence-list"></div>
+                </div>
+
+                <div>
+                    <h2 class="heading">ブロックごとの対戦表</h2>
+                    <div id="block-matches-list"></div>
+                </div>
+                
+                <div class="flex-row-center">
+                    <button id="back-to-setup-btn" class="tournament-setup-btn" onclick="goToSetup()">保存して設定画面に戻る</button>
+                </div>
+            </div>
+        </main>
+
+        <!-- スコア入力モーダル（常に body 直下に置く） -->
+        <div id="score-modal" class="modal hidden">
+            <div class="modal-content">
+                <h3 id="score-modal-title">スコア入力</h3>
+                <div class="score-grid">
+                    <div id="player1-name" class="player-name">player 1</div>
+                    <div id="player2-name" class="player-name">player 2</div>
+                
+                    <input type="number" id="player1-score" min="0" placeholder="スコア">
+                    <input type="number" id="player2-score" min="0" placeholder="スコア">
+                </div>
+
+                <div class="score-btn-grid">
+                    <button class="tournament-setup-btn score-btn" onclick="saveScore()">保存</button>
+                    <button class="tournament-setup-btn score-btn cancel-btn" onclick="closeScoreModal()">キャンセル</button>
+                </div>
+            </div>
+        </div>
+
+        <footer id="footer">
+            <p>&copy; nameless</p>
+        </footer>
+
+        <script src="/static/js/base.js"></script>
+        <script src="/static/js/matchbot/matchbot_local.js"></script>
+    </body>
+</html>

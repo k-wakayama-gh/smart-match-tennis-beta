@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Top page">
+        <meta name="author" content="nameless">
+        <link rel="icon" href="/static/img/favicon.ico">
+        <link rel="stylesheet" href="/static/css/base.css">
+        <title>Tournament</title>
+    </head>
+    <body>
+        {% include "header.html" %}
+
+        <main>
+            <div class="flex-column-center padding-1">
+                <h2>大会一覧</h2>
+                <table border="1">
+                    <tr><th>ID</th><th>大会名</th><th>期間</th><th>場所</th><th></th></tr>
+                    {% for t in tournaments %}
+                    <tr>
+                        <td>{{ t.id }}</td>
+                        <td>{{ t.name }}</td>
+                        <td>{{ t.start_date }}{% if t.end_date %} - {{ t.end_date }}{% endif %}</td>
+                        <td>{{ t.place or "" }}</td>
+                        <td><a href="/matchbot/tournament/{{ t.id }}/teams">チーム登録</a></td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            
+                <h3>大会作成</h3>
+                <form id="tournament-form">
+                    <label>大会名: <input type="text" name="name" required></label><br>
+                    <label>開始日: <input type="date" name="start_date" required></label><br>
+                    <label>終了日: <input type="date" name="end_date"></label><br>
+                    <label>場所: <input type="text" name="place"></label><br>
+                    <button type="submit">作成</button>
+                </form>
+            </div>
+        </main>
+
+        <footer id="footer">
+            <p>&copy; nameless</p>
+        </footer>
+        <script src="/static/js/matchbot/tournament.js"></script>
+    </body>
+</html>

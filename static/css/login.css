@@ -1,0 +1,17 @@
+#login-btn {
+    background-color: #2e7395;
+    color: white;
+}
+
+#login-btn:hover {
+    background-color: #4c99af;
+}
+
+
+#login-failed-message {
+    color: rgb(155, 72, 13);
+    background-color: antiquewhite;
+    text-align: start;
+    padding: 0.5rem;
+}
+

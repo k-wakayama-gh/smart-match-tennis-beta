@@ -1,0 +1,498 @@
+/* matchbot_local.css */
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: var(--background-color);
+    width: 90%;
+    max-width: 400px;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-sizing: border-box;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+#score-modal-title {
+    border-left: #812923 0.5rem solid;
+    padding-left: 0.5rem;
+}
+
+#score-modal input[type="number"] {
+    text-align: center;
+    font-size: larger;
+    width: 100%;
+}
+
+.score-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem 1.5rem;
+    margin-top: 2rem;
+
+    /* 通常の配置 */
+    grid-template-areas:
+        "p1 p2"
+        "s1 s2";
+}
+
+/* 左右反転 */
+.score-grid.reverse {
+    grid-template-areas:
+        "p2 p1"
+        "s2 s1";
+}
+
+/* 要素にエリアを割り当てる */
+#player1-name  { grid-area: p1; }
+#player2-name  { grid-area: p2; }
+#player1-score { grid-area: s1; }
+#player2-score { grid-area: s2; }
+
+
+
+.score-btn-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem 1.5rem;
+    margin-top: 2.5rem;
+}
+
+.tournament-setup-btn.score-btn {
+    padding: 1rem 0rem;
+    width: 100%;
+}
+
+.tournament-setup-btn.cancel-btn {
+    background-color: #555;
+}
+
+.tournament-setup-btn.cancel-btn:hover {
+    background-color: #444;
+}
+
+.player-name {
+    font-size: large;
+    word-break: break-word;
+}
+
+
+#match-management {
+    background-color: #eee;
+}
+
+
+.container-group > div {
+    margin-bottom: 3rem;
+}
+
+
+
+/* ブロックカード */
+.block {
+    border: gray 1px solid;
+    border-radius: 10px;
+    /* box-shadow: 0 3px 6px rgba(0,0,0,0.15); */
+    padding: 1rem;
+    margin-bottom: 3rem;
+    transition: transform 0.2s ease;
+    /* background-color: #ddd; */
+}
+
+/* #tournament-setup .block input[type="text"] {
+    border-color: gray;
+} */
+
+/* .block:hover {
+    transform: translateY(-2px);
+} */
+
+.block-name {
+    background-color: #f5ecf4;
+    text-align: center;
+}
+
+/* #tournament-setup .block input[type="text"].block-name {
+    border-color: gray;
+} */
+
+
+
+/* 選手入力欄 */
+.block input[type="text"] {
+    /* width: calc(100% - 1rem); */
+    margin-bottom: 1rem;
+}
+
+
+
+/* ブロックマトリックス */
+.block-matrix {
+    margin-bottom: 2rem;
+}
+
+.block-matrix table {
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.block-matrix table th, .block-matrix table td {
+    padding: 0.5rem 0.1rem;
+    border: 1px solid #ccc;
+    text-align: center;
+    word-break: break-word;
+}
+
+
+/* 先頭行（ヘッダー行） */
+.block-matrix tr:first-child th {
+    background-color: #dedede;
+    font-weight: bold;
+}
+
+/* 先頭列（左端） */
+.block-matrix th:first-child,
+.block-matrix td:first-child {
+    background-color: #dedede;
+    font-weight: bold;
+}
+
+/* スコアセル（操作対象） */
+.block-matrix td {
+    background-color: #f9f9f9;
+}
+
+
+
+/* ボタン */
+button {
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
+}
+
+button:hover {
+    transform: translateY(-1px);
+}
+
+
+
+/* テーブル */
+#match-sequence-list table {
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: fixed;
+}
+
+#match-sequence-list th, #match-sequence-list td {
+    border: 1px solid #ccc;
+    padding: 0.5rem 0.1rem;
+    text-align: center;
+    word-break: break-word;
+}
+
+#match-sequence-list thead {
+    background-color: #444;
+    color: white;
+}
+
+/* #match-sequence-list tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+} */
+
+#match-sequence-list table tbody tr {
+    background-color: #f9f9f9;
+}
+
+#match-sequence-list table tbody tr.on-going {
+    background-color: #fff3a0;
+}
+
+
+.score-cell {
+    cursor: pointer;
+    transition: background-color 0.1s ease;
+}
+
+.score-cell:hover {
+    background-color: rgba(255, 101, 45, 0.15);
+}
+
+
+
+/* 大会設定全体 */
+#tournament-setup {
+    background-color: #eee;
+    padding: 2rem;
+    margin: 2rem auto;
+    max-width: 720px;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+
+/* #tournament-setup > div {
+    margin-bottom: 2rem;
+} */
+
+
+/* セクション見出し */
+.heading {
+    border-left: 0.5rem solid #993f38;
+    padding-left: 0.5rem;
+    height: fit-content;
+    margin-bottom: 1.5rem;
+}
+
+.heading-in {
+    border-left: 0.5rem solid #993f38;
+    padding-left: 0.5rem;
+    height: fit-content;
+}
+
+.heading-container {
+    margin-bottom: 1.3rem;
+}
+
+
+/* テキスト入力・テキストエリア */
+#tournament-setup input[type="text"],
+#tournament-setup textarea {
+    padding: 0.8rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+#tournament-setup input[type="text"]:focus,
+#tournament-setup textarea:focus {
+    border-color: #20a7cd;
+    box-shadow: 0 0 0 3px rgba(32,167,205,0.2);
+    outline: none;
+}
+
+
+/* 説明用textarea */
+#tournament-description {
+    min-height: 100px;
+    resize: vertical;
+}
+
+#tournament-info-div input[type="text"],
+#block-div input[type="text"],
+#tournament-info-div textarea {
+    width: 100%;
+}
+
+#tournament-info-div input[type="text"] {
+    margin-bottom: 1rem;
+}
+
+#block-div input[type="text"]:not(:last-child) {
+    margin-bottom: 0.5rem;
+}
+
+
+.tournament-setup-btn {
+    background-color: #993f38;
+    color: white;
+    border: none;
+    border-radius: 9999px;
+    padding: 0.5rem 2rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.tournament-setup-btn:hover {
+    background-color: #812923;
+    transform: translateY(-1px);
+}
+
+.tournament-setup-btn:active {
+    transform: translateY(0);
+}
+
+
+.tournament-setup-btn.alt-btn {
+    background-color: white;
+    color: #333;
+    border: #993f38 1px solid;
+    border-radius: 9999px;
+    padding: 0.5rem 2rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+/* コートリスト */
+#court-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    gap: 0.5rem;
+}
+#court-list input {
+    text-align: center;
+    min-width: 0;
+}
+
+
+/* 現在進行中の試合カード */
+#current-matches-list table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#current-matches-list th,
+#current-matches-list td {
+    border: 1px solid #ccc;
+    padding: 0.5rem;
+    text-align: center;
+}
+
+#current-matches-list thead {
+    background-color: #444;
+    color: white;
+}
+
+
+/* スコアセル */
+#current-matches-list .score-cell {
+    cursor: pointer;
+    font-weight: bold;
+    color: #d35400;
+}
+
+/* ホバー・タップ感 */
+#current-matches-list .score-cell:hover {
+    background-color: rgba(255, 101, 45, 0.15);
+}
+
+
+/* でかいボタン */
+#generate-tournament-btn {
+    width: 100%;
+    padding: 1rem 2rem;
+    font-size: x-large;
+    margin-top: 1rem;
+}
+
+
+#back-to-setup-btn {
+    padding: 1rem 2rem;
+    font-size: large;
+}
+
+#savedata-div {
+    background-color: #eee;
+    padding: 2rem;
+    margin: 2rem auto;
+    max-width: 720px;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+
+#savedata-div > h2 {
+    border-left: 0.5rem solid #993f38;
+    padding-left: 0.5rem;
+    height: fit-content;
+    margin-bottom: 1.5rem;
+}
+
+.savedata-li {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: center;
+}
+
+.savedata-li:not(:last-child) {
+    margin-bottom: 1rem;
+}
+
+.savedata-li > span {
+    flex-grow: 1;
+    border: #20a7cd 1px solid;
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
+    background-color: aliceblue;
+}
+
+.savedata-li > button {
+    border: darkred 1px solid;
+    color: darkred;
+}
+
+.save-del-btn {
+    white-space: nowrap;
+}
+
+
+#tournament-title-div {
+    margin-top: 2rem;
+    width: fit-content;
+    border-bottom: #20a7cd 2px solid;
+    padding-bottom: 0.5rem;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 90%;
+}
+
+.tournament-title {
+    display: inline;
+}
+
+
+.interval {
+    background-color: #eee;
+    padding: 2rem;
+    margin: 0 auto;
+    max-width: 720px;
+    text-align: center;
+    color: #812923;
+    font-size: large;
+}
+
+
+/* スクロール対応ラッパー */
+.table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+
+.hidden {
+    display: none;
+}
+
+
+/* スマホ表示での見やすさ強化 */
+@media (max-width: 600px) {
+    #tournament-setup, #savedata-div {
+        margin: 0 auto;
+        padding: 1.5rem 1rem;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    #block-matches-list table,
+    #match-sequence-list table,
+    #current-matches-list table {
+        font-size: 0.8rem;
+    }
+
+    #court-list {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}

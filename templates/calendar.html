@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja">
+	<head>
+		<meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="calendar">
+        <meta name="author" content="nameless">
+        <link rel="icon" href="/static/img/favicon.ico">
+        <link rel="stylesheet" href="/static/css/base.css">
+		<link rel="stylesheet" href="static/css/calendar.css">
+		<title>カレンダー</title>
+	</head>
+	<body class="flex-column">
+        {% include "header.html" %}
+
+		<main class="flex-column">
+			<div class="flex-row-center" style="padding: 1rem 0;">
+				<button type="button" id="prevMonth">＜</button>
+				<h2 id="monthYear" class="text-center"></h2>
+				<button type="button" id="nextMonth">＞</button>
+			</div>
+			<table id="calendar">
+				<thead>
+					<tr>
+						<th>日</th>
+						<th>月</th>
+						<th>火</th>
+						<th>水</th>
+						<th>木</th>
+						<th>金</th>
+						<th>土</th>
+					</tr>
+				</thead>
+				<tbody></tbody>
+			</table>
+		</main>
+
+        <footer id="footer">
+            <p>&copy; nameless</p>
+        </footer>
+		<script type="text/javascript" src="static/js/calendar.js"></script>
+	</body>
+</html>
