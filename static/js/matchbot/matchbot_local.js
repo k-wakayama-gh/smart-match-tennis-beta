@@ -785,8 +785,10 @@ loadSavedataList();
 
 function renderTournamentTitle() {
     const title = tournamentData.name;
+    const titleDiv = document.getElementById("tournament-title-div");
+    titleDiv.innerHTML = "";
     const h2 = document.createElement("h2");
     h2.textContent = title;
     h2.classList.add("tournament-title");
-    document.getElementById("tournament-title-div").appendChild(h2);
+    titleDiv.appendChild(h2);
 }
