@@ -28,6 +28,10 @@
     padding-left: 0.5rem;
 }
 
+#score-modal-block {
+    margin: 1rem 0;
+}
+
 #score-modal input[type="number"] {
     text-align: center;
     font-size: larger;
@@ -38,7 +42,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1rem 1.5rem;
-    margin-top: 2rem;
+    margin-top: 1rem;
 
     /* 通常の配置 */
     grid-template-areas:

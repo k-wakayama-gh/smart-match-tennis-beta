@@ -1,7 +1,7 @@
 // matchbot_local.js
 
 let workingData = {
-    currentMatch: null,
+    selectedMatch: null,
     matchIdCounter: 1,
     blockCount: 1,
     courtNumberCount: 1
@@ -118,7 +118,7 @@ function removePlayerInput(playerList) {
 
 
 
-function readTournamentFromDOM() {
+function readTournamentDataFromDOM() {
     const data = {
         id: tournamentData.id ?? Date.now(),
         name: document.getElementById("tournament-name").value,
@@ -195,7 +195,7 @@ function copyToUI(data) {
 
 
 function generateTournamentFromDOM() {
-    const data = readTournamentFromDOM();
+    const data = readTournamentDataFromDOM();
     generateTournament(data);
     saveTournamentData(tournamentData);
 }
@@ -328,7 +328,7 @@ function displayMatchSequence() {
     // ヘッダー
     const thead = document.createElement("thead");
     const headerRow = document.createElement("tr");
-    ["No.", "ブロック", "選手1", "選手2", "スコア", "ステータス", "コート"].forEach(text => {
+    ["No.", "ブロック", "選手1", "選手2", "スコア", "状態", "コート"].forEach(text => {
         const th = document.createElement("th");
         th.textContent = text;
         headerRow.appendChild(th);
@@ -477,16 +477,18 @@ function createTd(text) {
 function openScoreModal(match, td) {
     if (!match) return;
 
-    workingData.currentMatch = match;
+    workingData.selectedMatch = match;
 
     const player_1_name = tournamentData.players.find(player => player.id === match.player_1_id).name;
     const player_2_name = tournamentData.players.find(player => player.id === match.player_2_id).name;
 
-    document.getElementById("score-modal-title").innerText = "スコア入力";
-    document.getElementById("player1-name").textContent = player_1_name;
-    document.getElementById("player2-name").textContent = player_2_name;
-    document.getElementById("player1-score").value = match.player1_score ?? "";
-    document.getElementById("player2-score").value = match.player2_score ?? "";
+    const block_name = tournamentData.blocks.find(block => block.id === match.block_id).name;
+
+    document.getElementById("score-modal-block").innerText = "ブロック：" + block_name;
+    document.getElementById("player-1-name").textContent = player_1_name;
+    document.getElementById("player-2-name").textContent = player_2_name;
+    document.getElementById("player-1-score").value = match.player_1_score ?? "";
+    document.getElementById("player-2-score").value = match.player_2_score ?? "";
 
     const is_opposite = td.classList.contains("opposite-score");
     document.querySelector("#score-modal .score-grid").classList.toggle("reverse", is_opposite);
@@ -504,20 +506,20 @@ function closeScoreModal() {
 
 
 function saveScore() {
-    if (!workingData.currentMatch) return;
+    if (!workingData.selectedMatch) return;
 
-    const player_1_score = parseInt(document.getElementById("player1-score").value, 10);
-    const player_2_score = parseInt(document.getElementById("player2-score").value, 10);
+    const player_1_score = parseInt(document.getElementById("player-1-score").value, 10);
+    const player_2_score = parseInt(document.getElementById("player-2-score").value, 10);
 
     if (isNaN(player_1_score) || isNaN(player_2_score)) {
         alert("スコアを入力してください");
         return;
     }
 
-    workingData.currentMatch.player1_score = player_1_score;
-    workingData.currentMatch.player2_score = player_2_score;
-    workingData.currentMatch.sets = [{ player_1_games: player_1_score, player_2_games: player_2_score }];
-    workingData.currentMatch.status = "finished";
+    workingData.selectedMatch.player_1_score = player_1_score;
+    workingData.selectedMatch.player_2_score = player_2_score;
+    workingData.selectedMatch.sets = [{ player_1_games: player_1_score, player_2_games: player_2_score }];
+    workingData.selectedMatch.status = "finished";
 
     scheduleNextMatches();
 
@@ -536,13 +538,13 @@ function refreshBlockMatrix () {
     if (matrixDiv) {
         const cells = matrixDiv.querySelectorAll(".score-cell");
         cells.forEach(cell => {
-            if (parseInt(cell.dataset.matchId, 10) === workingData.currentMatch.id) {
+            if (parseInt(cell.dataset.matchId, 10) === workingData.selectedMatch.id) {
                 const row_player_id = parseInt(cell.dataset.rowPlayerId, 10);
-                const set = workingData.currentMatch.sets[0];
+                const set = workingData.selectedMatch.sets[0];
 
                 if (!isNaN(row_player_id)) {
                     cell.textContent =
-                        workingData.currentMatch.player_1_id === row_player_id
+                        workingData.selectedMatch.player_1_id === row_player_id
                             ? `${set.player_1_games} - ${set.player_2_games}`
                             : `${set.player_2_games} - ${set.player_1_games}`;
                 } else {
@@ -558,11 +560,12 @@ function refreshBlockMatrix () {
 // ------------------- 空きコートに次の試合を割り当て -------------------
 function scheduleNextMatches() {
     tournamentData.courts.forEach(court => {
-        const ongoing = tournamentData.matches.find(
-            match => match.court_id === court.id && match.status === "ongoing"
-        );
+        const ongoing = tournamentData.matches.find(match => match.court_id === court.id && match.status === "ongoing");
         if (!ongoing) {
-            const nextMatch = tournamentData.matches.find(match => match.status === "pending");
+            const current_matches = tournamentData.matches.filter(match => match.status == "ongoing");
+            let current_players = current_matches.map(match => match.player_1_id);
+            current_players.concat(current_matches.map(match => match.player_2_id));
+            const nextMatch = tournamentData.matches.find(match => match.status === "pending" && !current_players.includes(match.player_1_id) && !current_players.includes(match.player_2_id));
             if (nextMatch) {
                 nextMatch.status = "ongoing";
                 nextMatch.court_id = court.id;
