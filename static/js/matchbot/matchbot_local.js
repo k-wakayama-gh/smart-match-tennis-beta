@@ -563,9 +563,12 @@ function scheduleNextMatches() {
         const ongoing = tournamentData.matches.find(match => match.court_id === court.id && match.status === "ongoing");
         if (!ongoing) {
             const current_matches = tournamentData.matches.filter(match => match.status == "ongoing");
-            let current_players = current_matches.map(match => match.player_1_id);
-            current_players.concat(current_matches.map(match => match.player_2_id));
-            const nextMatch = tournamentData.matches.find(match => match.status === "pending" && !current_players.includes(match.player_1_id) && !current_players.includes(match.player_2_id));
+            const current_player_ids = new Set();
+            current_matches.forEach(match => {
+                current_player_ids.add(match.player_1_id);
+                current_player_ids.add(match.player_2_id);
+            })
+            const nextMatch = tournamentData.matches.find(match => match.status === "pending" && !current_player_ids.has(match.player_1_id) && !current_player_ids.has(match.player_2_id));
             if (nextMatch) {
                 nextMatch.status = "ongoing";
                 nextMatch.court_id = court.id;
