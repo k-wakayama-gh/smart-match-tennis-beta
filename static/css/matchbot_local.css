@@ -58,10 +58,10 @@
 }
 
 /* 要素にエリアを割り当てる */
-#player1-name  { grid-area: p1; }
-#player2-name  { grid-area: p2; }
-#player1-score { grid-area: s1; }
-#player2-score { grid-area: s2; }
+#player-1-name  { grid-area: p1; }
+#player-2-name  { grid-area: p2; }
+#player-1-score { grid-area: s1; }
+#player-2-score { grid-area: s2; }
 
 
 
